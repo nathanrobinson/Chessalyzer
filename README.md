@@ -1,2 +1,2 @@
 # Chessalyzer
-Analyzer chess games from URL
+Analyze chess games from URL
