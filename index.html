@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Chessalyzer</title>
+    <script src="/lib/stockfish.js"></script>
+  </head>
+  <body>
+    <form id="load-form">
+      <div>
+        <label for="username">Chess.com username:</label
+        ><input id="username" type="text" />
+      </div>
+      <div><input type="submit" id="load" value="Load" /></div>
+    </form>
+  </body>
+  <div id="review-div"></div>
+  <div id="results-div">
+    <form id="filter-form">
+      <select id="filter-field">
+        <option></option>
+        <option value="game.time_class">Type</option>
+        <option value="playedAs">Played as</option>
+        <option value="opponent.username">Opponent</option>
+        <option value="player.result">Result</option>
+        <option value="game.url">Game link</option>
+      </select>
+
+      <select id="filter-type">
+        <option value="=">=</option>
+        <option value="lt">&lt;</option>
+        <option value="lte">&lt;=</option>
+        <option value="gt">&gt;</option>
+        <option value="gte">&gt;=</option>
+        <option value="!=">!=</option>
+        <option value="like">like</option>
+      </select>
+
+      <input id="filter-value" type="text" placeholder="value to filter" />
+      <input id="filter-search" type="submit" value="Search" />
+
+      <input id="filter-clear" type="reset" value="Clear Filter" />
+    </form>
+    <table id="results-table"></table>
+  </div>
+</html>

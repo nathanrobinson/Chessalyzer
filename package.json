@@ -1,0 +1,37 @@
+{
+  "name": "my-webpack-project",
+  "version": "1.0.0",
+  "description": "My webpack project",
+  "main": "index.js",
+  "repository": "https://github.com/nathanrobinson/Chessalyzer.git",
+  "author": "nathanrobinson <nathanrobinson@yahoo.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chess.js": "^1.0.0-beta.8",
+    "stockfish-nnue.wasm": "^1.0.0-1946a675.smolnet",
+    "tabulator-tables": "^6.2.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@webpack-cli/generators": "^3.0.7",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "prettier": "^3.3.3",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "scripts": {
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  }
+}
