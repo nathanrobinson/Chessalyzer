@@ -121,9 +121,11 @@ export class ReviewApi {
 
   #setupProgress() {
     document.getElementById("review-div").innerHTML = `
+      <div class="progress-bar-wrapper">
         <div class="progress-bar">
             <div id="review-progress" class="bar-status"></div>
-        </div>`;
+        </div>
+      </div>`;
   }
 
   #reportProgress(step, total) {
