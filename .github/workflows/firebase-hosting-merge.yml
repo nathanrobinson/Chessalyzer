@@ -34,8 +34,6 @@ jobs:
     needs: build
 
     steps:
-      - uses: actions/checkout@v4
-      - run: yarn --frozen-lockfile --non-interactive --prefer-offline && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
