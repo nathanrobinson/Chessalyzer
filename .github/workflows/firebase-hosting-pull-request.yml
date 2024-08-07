@@ -9,6 +9,7 @@ permissions:
   pull-requests: write
 jobs:
   build:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,16 +29,8 @@ jobs:
           yarn --frozen-lockfile --non-interactive --prefer-offline
           yarn build
 
-  # Deploy job
-  deploy:
-    runs-on: ubuntu-latest
-    # Add a dependency to the build job
-    needs: build
-
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-
-    steps:
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHESSALYZER }}

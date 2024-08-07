@@ -27,14 +27,8 @@ jobs:
           yarn --frozen-lockfile --non-interactive --prefer-offline
           yarn build
 
-  # Deploy job
-  deploy:
-    runs-on: ubuntu-latest
-    # Add a dependency to the build job
-    needs: build
-
-    steps:
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase live channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHESSALYZER }}
