@@ -1,0 +1,14 @@
+.tabulator-cell {
+  button,
+  md-elevated-button,
+  md-filled-button,
+  md-filled-tonal-button,
+  md-outlined-button,
+  md-text-button {
+    padding: 0px 6px;
+    min-height: 10px;
+    border-radius: 4px;
+    line-height: 13pt;
+    font-size: 10pt;
+  }
+}

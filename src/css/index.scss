@@ -1,0 +1,35 @@
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 1em;
+}
+
+#load-form {
+  #username {
+    flex: auto;
+    max-width: 400px;
+  }
+  .spacer {
+    flex: auto;
+  }
+}
+
+#review-div {
+  padding: 1em;
+}
+
+#results-div {
+  padding: 1em;
+}
+
+.rounded {
+  --md-icon-font: "Material Symbols Rounded";
+}
+.sharp {
+  --md-icon-font: "Material Symbols Sharp";
+}
+md-icon[filled] {
+  font-variation-settings: "FILL" 1;
+}

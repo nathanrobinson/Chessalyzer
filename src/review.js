@@ -121,15 +121,17 @@ export class ReviewApi {
 
   #setupProgress() {
     document.getElementById("review-div").innerHTML = `
-      <div class="progress-bar-wrapper">
-        <div class="progress-bar">
-            <div id="review-progress" class="bar-status"></div>
-        </div>
-      </div>`;
+    <div class="progress-wrapper">
+      <md-circular-progress id="review-progress-bar" value="0" max="100" indeterminate="true"></md-circular-progress>
+    </div>`;
   }
 
   #reportProgress(step, total) {
     const percent = Math.round((Number(step) / Number(total)) * 100);
-    document.getElementById("review-progress").style.width = `${percent}%`;
+    if (percent > 10) {
+      const progress = document.getElementById("review-progress-bar");
+      progress.indeterminate = false;
+      progress.value = percent;
+    }
   }
 }

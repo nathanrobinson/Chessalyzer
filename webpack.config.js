@@ -9,10 +9,11 @@ const isProduction = process.env.NODE_ENV == "production";
 const stylesHandler = "style-loader";
 
 const config = {
-  entry: ["./index.js", "./index.css"],
+  entry: ["./index.js", "./index.scss"],
   output: {
     path: path.resolve(__dirname, "dist"),
   },
+  devtool: "source-map",
   devServer: {
     open: true,
     host: "localhost",
@@ -29,6 +30,10 @@ const config = {
       patterns: [
         {
           from: "./node_modules/stockfish-nnue.wasm/stockfish.*",
+          to: "lib/[name][ext]",
+        },
+        {
+          from: "./node_modules/xlsx/dist/xlsx.full.min.js",
           to: "lib/[name][ext]",
         },
       ],
