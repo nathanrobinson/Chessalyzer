@@ -7,9 +7,12 @@
   "author": "nathanrobinson <nathanrobinson@yahoo.com>",
   "license": "MIT",
   "dependencies": {
+    "@material/web": "^2.0.0",
     "chess.js": "^1.0.0-beta.8",
+    "normalize.css": "^8.0.1",
     "stockfish-nnue.wasm": "^1.0.0-1946a675.smolnet",
-    "tabulator-tables": "^6.2.5"
+    "tabulator-tables": "^6.2.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

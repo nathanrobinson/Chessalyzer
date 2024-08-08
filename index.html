@@ -4,43 +4,74 @@
     <meta charset="utf-8" />
     <title>Chessalyzer</title>
     <script src="lib/stockfish.js"></script>
+    <script src="lib/xlsx.full.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,100..700,0..1"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL@20..48,100..700,0..1"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <form id="load-form">
-      <div>
-        <label for="username">Chess.com username:</label
-        ><input id="username" type="text" />
-      </div>
-      <div><input type="submit" id="load" value="Load" /></div>
+      <md-outlined-text-field id="username" label="Chess.com username" value="">
+      </md-outlined-text-field>
+      <md-outlined-button id="load-button" type="submit"
+        >Load</md-outlined-button
+      >
+      <div class="spacer"></div>
+      <md-icon-button
+        selected
+        toggle
+        id="theme-normal"
+        aria-label="Normal contrast"
+      >
+        <md-icon>brightness_low</md-icon>
+      </md-icon-button>
+      <md-icon-button toggle id="theme-medium" aria-label="Medium contrast">
+        <md-icon>brightness_medium</md-icon>
+      </md-icon-button>
+      <md-icon-button toggle id="theme-high" aria-label="High contrast">
+        <md-icon>brightness_high</md-icon>
+      </md-icon-button>
+      <label for="dark-switch">Toggle Dark mode</label>
+      <md-switch id="dark-switch" selected></md-switch>
     </form>
+    <div id="review-div"></div>
+    <div id="results-div">
+      <form id="filter-form">
+        <md-outlined-select id="filter-time-class" label="Time class">
+          <md-select-option selected aria-label="blank"></md-select-option>
+          <md-select-option value="bullet">
+            <div slot="headline">Bullet</div>
+          </md-select-option>
+          <md-select-option value="blitz">
+            <div slot="headline">Blitz</div>
+          </md-select-option>
+          <md-select-option value="rapid">
+            <div slot="headline">Rapid</div>
+          </md-select-option>
+          <md-select-option value="daily">
+            <div slot="headline">Daily</div>
+          </md-select-option>
+          <md-select-option value="custom">
+            <div slot="headline">Custom</div>
+          </md-select-option>
+        </md-outlined-select>
+      </form>
+      <md-icon-button id="download-games-excel" title="Download Excel">
+        <md-icon>table</md-icon>
+      </md-icon-button>
+      <md-icon-button id="download-games-csv" title="Download csv">
+        <md-icon>csv</md-icon>
+      </md-icon-button>
+      <table id="results-table"></table>
+    </div>
   </body>
-  <div id="review-div"></div>
-  <div id="results-div">
-    <form id="filter-form">
-      <select id="filter-field">
-        <option></option>
-        <option value="game.time_class">Type</option>
-        <option value="playedAs">Played as</option>
-        <option value="opponent.username">Opponent</option>
-        <option value="player.result">Result</option>
-        <option value="game.url">Game link</option>
-      </select>
-
-      <select id="filter-type">
-        <option value="=">=</option>
-        <option value="lt">&lt;</option>
-        <option value="lte">&lt;=</option>
-        <option value="gt">&gt;</option>
-        <option value="gte">&gt;=</option>
-        <option value="!=">!=</option>
-        <option value="like">like</option>
-      </select>
-
-      <input id="filter-value" type="text" placeholder="value to filter" />
-      <input id="filter-search" type="submit" value="Search" />
-
-      <input id="filter-clear" type="reset" value="Clear Filter" />
-    </form>
-    <table id="results-table"></table>
-  </div>
 </html>

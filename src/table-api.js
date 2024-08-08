@@ -1,5 +1,7 @@
 import {
   Tabulator,
+  DownloadModule,
+  ExportModule,
   FilterModule,
   FormatModule,
   InteractionModule,
@@ -17,8 +19,10 @@ export class TableApi {
     columns: [
       //Define Table Columns
       {
-        formatter: () => "<button>Review</button>",
+        formatter: () =>
+          "<md-filled-tonal-button>Review</md-filled-tonal-button>",
         hozAlign: "center",
+        width: 70,
         cellClick: (e, cell) => this.#reviewGame(cell.getRow().getData()),
       },
       { title: "Type", field: "game.time_class" },
@@ -59,13 +63,16 @@ export class TableApi {
     columns: [
       //Define Table Columns
       {
-        title: "Move Link",
-        field: "url",
-        formatter: "link",
-        formatterParams: {
-          labelField: "index",
-          target: "_blank",
+        title: "Move",
+        hozAlign: "center",
+        field: "index",
+        sorter: "number",
+        formatter: (cell) => {
+          const rowData = cell.getRow().getData();
+          return `<md-filled-tonal-button href="${rowData.url}" target="_blank">${rowData.index}</md-filled-tonal-button>`;
         },
+        hozAlign: "center",
+        width: 70,
       },
       { title: "Best Move", field: "bestMove.move" },
       { title: "Played", field: "actualScore.move" },
@@ -89,6 +96,8 @@ export class TableApi {
 
   constructor() {
     Tabulator.registerModule([
+      DownloadModule,
+      ExportModule,
       FilterModule,
       FormatModule,
       InteractionModule,
@@ -96,6 +105,7 @@ export class TableApi {
     ]);
     this.#table = new Tabulator("#results-table", this.#tableParams);
     this.#setUpFilters();
+    this.#enableDownload();
   }
 
   formatTable(username, games) {
@@ -131,43 +141,57 @@ export class TableApi {
 
   #setUpFilters() {
     //Define variables for input elements
-    const fieldEl = document.getElementById("filter-field");
-    const typeEl = document.getElementById("filter-type");
-    const valueEl = document.getElementById("filter-value");
-
-    //Trigger setFilter function with correct parameters
-    //Update filters on value change
-    document.getElementById("filter-form").addEventListener("click", (e) => {
-      e.preventDefault();
-      var filterVal = fieldEl.options[fieldEl.selectedIndex].value;
-      var typeVal = typeEl.options[typeEl.selectedIndex].value
-        .replace("gte", ">=")
-        .replace("lte", "<=")
-        .replace("gt", ">")
-        .replace("lt", "<");
-
-      var filter = filterVal;
-
-      if (filterVal) {
-        this.#table.setFilter(filter, typeVal, valueEl.value);
+    const timeClassEl = document.getElementById("filter-time-class");
+    timeClassEl.addEventListener("change", (e) => {
+      const value = timeClassEl.value;
+      if (value) {
+        this.#table.setFilter("game.time_class", "=", value);
+      } else {
+        this.#table.clearFilter();
       }
     });
+  }
 
-    //Clear filters on "Clear Filters" button click
-    document.getElementById("filter-clear").addEventListener("click", () => {
-      fieldEl.value = "";
-      typeEl.value = "=";
-      valueEl.value = "";
+  #enableDownload() {
+    document
+      .getElementById("download-games-excel")
+      .addEventListener("click", (e) =>
+        this.#table.download("xlsx", "chess_games.xlsx", {
+          sheetName: `${document.getElementById("username").value}'s Games`,
+        })
+      );
 
-      this.#table.clearFilter();
-    });
+    document
+      .getElementById("download-games-csv")
+      .addEventListener("click", (e) =>
+        this.#table.download("csv", "chess_games.csv", { bom: true })
+      );
   }
 
   async #reviewGame(data) {
     const worstMoves = await this.#reviewApi.reviewGame(data);
-    document.getElementById("review-div").innerHTML =
-      '<table id="review-table"></table>';
+    document.getElementById("review-div").innerHTML = `
+      <md-icon-button id="download-moves-excel" title="Download Excel">
+        <md-icon>table</md-icon>
+      </md-icon-button>
+      <md-icon-button id="download-moves-csv" title="Download csv">
+        <md-icon>csv</md-icon>
+      </md-icon-button>
+      <table id="review-table"></table>
+      `;
     const reviewTable = new Tabulator("#review-table", this.#reviewTableParams);
     reviewTable.on("tableBuilt", () => reviewTable.setData(worstMoves));
+    document
+      .getElementById("download-moves-excel")
+      .addEventListener("click", (e) =>
+        reviewTable.download("xlsx", "chess_games.xlsx", {
+          sheetName: "Moves",
+        })
+      );
+    document
+      .getElementById("download-moves-csv")
+      .addEventListener("click", (e) =>
+        reviewTable.download("csv", "chess_games.csv", { bom: true })
+      );
   }
 }
